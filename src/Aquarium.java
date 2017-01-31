@@ -1,15 +1,17 @@
-import Poissons.Algue;
-import Poissons.FishFactory;
-import Poissons.Poisson;
+import Poissons.*;
 
 import java.util.Collection;
+import java.util.List;
+import java.util.Random;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class Aquarium {
 
-    private Collection<Poisson> poissons;
-    private Collection<Algue> algues;
+    private List<Poisson> poissons;
+    private List<Algue> algues;
+
+    
 
     public Aquarium(int nbPoissons, int nbAlgues) {
         FishFactory fishFactory = new FishFactory();
@@ -22,11 +24,31 @@ public class Aquarium {
                 .collect(Collectors.toList());
     }
 
-    public Collection<Poisson> getPoissons() {
+    public List<Poisson> getPoissons() {
         return poissons;
     }
 
-    public Collection<Algue> getAlgues() {
+    public List<Algue> getAlgues() {
         return algues;
+    }
+
+    public void newTour() {
+        //Chaque poisson mange
+        for(Poisson p : getPoissons()) {
+            Random rnd = new Random();
+            //On prend un poisson au hasard
+            if(p instanceof PoissonCarnivore) {
+                int i = rnd.nextInt(getPoissons().size());
+                Poisson pManger =  getPoissons().get(i);
+                //On vérifie qu'il ne se mange pas lui mêmee
+                if (pManger != p) {
+                    ((PoissonCarnivore) p).mange(pManger);
+                }
+            } else {
+                int i = rnd.nextInt(getAlgues().size());
+                Algue algueManger =  getAlgues().get(i);
+                ((PoissonHerbivore) p).mange(algueManger);
+            }
+        }
     }
 }
