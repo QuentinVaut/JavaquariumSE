@@ -45,4 +45,9 @@ public class Poisson {
                 '}';
     }
 
+    public static Poisson randomWithName(String name) {
+        return new Poisson(name, Genre.getRandom(), Espece.getRandom());
+    }
+
+
 }
