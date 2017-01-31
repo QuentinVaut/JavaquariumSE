@@ -33,6 +33,7 @@ public class Javaquarium {
         {
             Algue a = new Algue();
             lstAlgues.add(a);
+            
         }
     }
 
