@@ -1,4 +1,5 @@
 import Poissons.Algue;
+import Poissons.FishFactory;
 import Poissons.Poisson;
 
 import java.util.Collection;
@@ -11,9 +12,10 @@ public class Aquarium {
     private Collection<Algue> algues;
 
     public Aquarium(int nbPoissons, int nbAlgues) {
+        FishFactory fishFactory = new FishFactory();
         poissons = IntStream.range(0, nbPoissons)
                 .mapToObj(i -> "Poisson " + i)
-                .map(Poisson::randomWithName)
+                .map(fishFactory::randomWithName)
                 .collect(Collectors.toList());
         algues = IntStream.range(0, nbAlgues)
                 .mapToObj(i -> new Algue())
