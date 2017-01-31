@@ -1,8 +1,3 @@
-import Poissons.*;
-
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * Created by quentin on 31/01/2017.
  */

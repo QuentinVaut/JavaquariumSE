@@ -11,7 +11,7 @@ public class Aquarium {
     private List<Poisson> poissons;
     private List<Algue> algues;
 
-    
+
 
     public Aquarium(int nbPoissons, int nbAlgues) {
         FishFactory fishFactory = new FishFactory();
