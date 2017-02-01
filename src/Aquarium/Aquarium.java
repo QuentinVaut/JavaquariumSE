@@ -57,19 +57,14 @@ public class Aquarium {
     }
 
     public void newTour() {
-        //Chaque poisson mange
+        Random rnd = new Random();
         for(Poisson p : getPoissons()) {
-            Random rnd = new Random();
-            //On prend un poisson au hasard
+            int i = rnd.nextInt(getPoissons().size());
             if(p instanceof PoissonCarnivore) {
-                int i = rnd.nextInt(getPoissons().size());
-                Poisson pManger =  getPoissons().get(i);
-                //On vérifie qu'il ne se mange pas lui mêmee
-                if (pManger != p) {
-                    ((PoissonCarnivore) p).mange(pManger);
+                if (getPoissons().get(i) != p) {
+                    ((PoissonCarnivore) p).mange(getPoissons().get(i));
                 }
             } else {
-                int i = rnd.nextInt(getAlgues().size());
                 Algue algueManger =  getAlgues().get(i);
                 ((PoissonHerbivore) p).mange(algueManger);
             }
