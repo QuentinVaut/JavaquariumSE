@@ -13,13 +13,16 @@ public class Aquarium {
 
     private List<Poisson> poissons;
     private List<Algue> algues;
-    private static Aquarium INSTANCE = null;
 
-    private Aquarium() {
-
+    public void displayAquarium() {
+        System.out.println("AQUARIUM INFOS :");
+        getPoissons().forEach(System.out::println);
+        getAlgues().forEach(System.out::println);
+        System.out.println("//////////////////////////////////////////////////////FIN////////////////////////////////////////////");
     }
 
-    public void initAquarium(int nbPoissons, int nbAlgues) {
+
+    public Aquarium(int nbPoissons, int nbAlgues) {
         FishFactory fishFactory = new FishFactory();
         poissons = IntStream.range(0, nbPoissons)
                 .mapToObj(i -> "Poisson " + i)
@@ -28,25 +31,6 @@ public class Aquarium {
         algues = IntStream.range(0, nbAlgues)
                 .mapToObj(i -> new Algue())
                 .collect(Collectors.toList());
-    }
-
-    /*public Aquarium(int nbPoissons, int nbAlgues) {
-        FishFactory fishFactory = new FishFactory();
-        poissons = IntStream.range(0, nbPoissons)
-                .mapToObj(i -> "Poisson " + i)
-                .map(fishFactory::randomWithName)
-                .collect(Collectors.toList());
-        algues = IntStream.range(0, nbAlgues)
-                .mapToObj(i -> new Algue())
-                .collect(Collectors.toList());
-    }*/
-
-    public static Aquarium getInstance() {
-        if (INSTANCE == null) {
-            INSTANCE = new Aquarium();
-        }
-
-        return INSTANCE;
     }
 
     public List<Poisson> getPoissons() {
@@ -65,6 +49,8 @@ public class Aquarium {
         algues = algues.stream()
                 .filter(Algue::isAlive)
                 .collect(Collectors.toList());
+        displayAquarium();
+
     }
 
     private void newTour(Poisson poisson) {
@@ -73,9 +59,13 @@ public class Aquarium {
         }
         if (poisson instanceof Carnivore) {
             Optional<Poisson> otherFish = pickOtherRandomFish(poisson);
+            otherFish = otherFish.filter(Poisson::isAlive);
+            //System.out.println("Optiion : " + otherFish);
             otherFish.ifPresent(((Carnivore) poisson)::mange);
+
         } else if (poisson instanceof Herbivore) {
             Optional<Algue> algue = pickRandomAlgue();
+            algue = algue.filter(Algue::isAlive);
             algue.ifPresent(((Herbivore) poisson)::mange);
         }
     }
