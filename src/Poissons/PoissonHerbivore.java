@@ -12,8 +12,6 @@ public abstract class PoissonHerbivore extends Poisson implements Herbivore {
 
     @Override
     public void mange(Algue algue) {
-        Aquarium aquarium = Aquarium.getInstance();
-        aquarium.getAlgues().remove(algue);
-        System.out.println("Algue manger : ");
+        algue.die();
     }
 }
