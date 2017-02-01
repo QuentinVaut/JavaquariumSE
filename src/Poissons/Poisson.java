@@ -1,14 +1,28 @@
 package Poissons;
 
 
-public abstract class Poisson {
+public abstract class Poisson implements LivingThing {
 
     private String nom;
     private Genre genre;
+    private boolean dead = false;
 
     public Poisson(String nom, Genre genre) {
         this.nom = nom;
         this.genre = genre;
+    }
+
+    @Override
+    public void die() {
+        if(dead) {
+            throw new IllegalStateException("A dead Fish cannot die");
+        }
+        dead = true;
+    }
+
+    @Override
+    public boolean isDead() {
+        return dead;
     }
 
     public String getNom() {
