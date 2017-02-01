@@ -1,5 +1,7 @@
 package Poissons;
 
+import Aquarium.Aquarium;
+
 /**
  * Created by quentin on 31/01/2017.
  */
@@ -10,6 +12,8 @@ public abstract class PoissonHerbivore extends Poisson implements Herbivore {
 
     @Override
     public void mange(Algue algue) {
-
+        Aquarium aquarium = Aquarium.getInstance();
+        aquarium.getAlgues().remove(algue);
+        System.out.println("Algue manger : ");
     }
 }

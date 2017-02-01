@@ -1,6 +1,7 @@
+package Aquarium;
+
 import Poissons.*;
 
-import java.util.Collection;
 import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
@@ -8,12 +9,16 @@ import java.util.stream.IntStream;
 
 public class Aquarium {
 
+
     private List<Poisson> poissons;
     private List<Algue> algues;
+    private static Aquarium INSTANCE = null;
 
+    private Aquarium() {
 
+    }
 
-    public Aquarium(int nbPoissons, int nbAlgues) {
+    public void initAquarium(int nbPoissons, int nbAlgues) {
         FishFactory fishFactory = new FishFactory();
         poissons = IntStream.range(0, nbPoissons)
                 .mapToObj(i -> "Poisson " + i)
@@ -22,6 +27,25 @@ public class Aquarium {
         algues = IntStream.range(0, nbAlgues)
                 .mapToObj(i -> new Algue())
                 .collect(Collectors.toList());
+    }
+
+    /*public Aquarium(int nbPoissons, int nbAlgues) {
+        FishFactory fishFactory = new FishFactory();
+        poissons = IntStream.range(0, nbPoissons)
+                .mapToObj(i -> "Poisson " + i)
+                .map(fishFactory::randomWithName)
+                .collect(Collectors.toList());
+        algues = IntStream.range(0, nbAlgues)
+                .mapToObj(i -> new Algue())
+                .collect(Collectors.toList());
+    }*/
+
+    public static Aquarium getInstance() {
+        if(INSTANCE == null) {
+            INSTANCE = new Aquarium();
+        }
+
+        return INSTANCE;
     }
 
     public List<Poisson> getPoissons() {

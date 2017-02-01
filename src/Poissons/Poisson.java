@@ -29,9 +29,17 @@ public abstract class Poisson {
 
     @Override
     public String toString() {
+        String strRegimeAlimentaire;
+        if(this instanceof Carnivore) {
+            strRegimeAlimentaire = "CARNIVORE";
+        } else {
+            strRegimeAlimentaire = "HERBIVORE";
+        }
+
         return getClass().getSimpleName() + "{" +
                 "nom='" + nom + '\'' +
-                ", genre=" + genre +
+                ", genre=" + genre + '\'' +
+                ", alimentaire=" + strRegimeAlimentaire +
                 '}';
     }
 
