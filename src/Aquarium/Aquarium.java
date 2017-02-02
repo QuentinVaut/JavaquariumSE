@@ -42,31 +42,54 @@ public class Aquarium {
     }
 
     public void newTour() {
-        poissons.forEach(this::newTour);
+        poissons.forEach(poisson -> poisson.setPv(poisson.getPv() -1));
+        //poissons.forEach(this::newTour);
+        for(Poisson poisson : poissons) {
+            poisson.setPv(poisson.getPv() -1);
+            poisson.setTour(poisson.getTour() + 1);
+            if(poisson.getTour() > 20) {
+                poisson.die();
+                System.out.println("Poisson : " + poisson.getNom() + " est mort de vieillesse");
+            }
+            newTour(poisson);
+        }
         poissons = poissons.stream()
-                .filter(Poisson::isAlive)
+                .filter(poisson -> poisson.isAlive())
                 .collect(Collectors.toList());
+
+        for(Algue algue : algues) {
+            algue.setPv(algue.getPv() + 1);
+            algue.setTour(algue.getTour() + 1);
+            if(algue.getTour() > 20) {
+                algue.die();
+                System.out.println("Une algue est morte de vieillesse.");
+            }
+        }
+
+        //algues.forEach(algue -> algue.setPv(algue.getPv() + 1));
         algues = algues.stream()
                 .filter(Algue::isAlive)
                 .collect(Collectors.toList());
         displayAquarium();
-
     }
 
     private void newTour(Poisson poisson) {
         if(poisson.isDead()) {
             return;
         }
-        if (poisson instanceof Carnivore) {
-            Optional<Poisson> otherFish = pickOtherRandomFish(poisson);
-            otherFish = otherFish.filter(Poisson::isAlive);
-            //System.out.println("Optiion : " + otherFish);
-            otherFish.ifPresent(((Carnivore) poisson)::mange);
 
-        } else if (poisson instanceof Herbivore) {
-            Optional<Algue> algue = pickRandomAlgue();
-            algue = algue.filter(Algue::isAlive);
-            algue.ifPresent(((Herbivore) poisson)::mange);
+        if(poisson.getPv() <= 5) {
+            if (poisson instanceof Carnivore) {
+                Optional<Poisson> otherFish = pickOtherRandomFish(poisson);
+                otherFish = otherFish.filter(Poisson::isAlive);
+                otherFish.ifPresent(((Carnivore) poisson)::mange);
+                poisson.setPv(poisson.getPv() +5);
+            } else if (poisson instanceof Herbivore) {
+                Optional<Algue> algue = pickRandomAlgue();
+                algue = algue.filter(Algue::isAlive);
+                algue.ifPresent(((Herbivore) poisson)::mange);
+                poisson.setPv(poisson.getPv() + 3);
+            }
         }
     }
 
@@ -84,7 +107,7 @@ public class Aquarium {
         }
         while (true) {
             Poisson otherFish = poissons.get(new Random().nextInt(poissons.size()));
-            if (otherFish != fishNotToPick) {
+            if (otherFish != fishNotToPick && otherFish.getClass() != fishNotToPick.getClass()) {
                 return Optional.of(otherFish);
             }
         }

@@ -6,6 +6,8 @@ public abstract class Poisson implements LivingThing {
     private String nom;
     private Genre genre;
     private boolean dead = false;
+    private int pv = 10;
+    private int tour = 0;
 
     public Poisson(String nom, Genre genre) {
         this.nom = nom;
@@ -41,6 +43,22 @@ public abstract class Poisson implements LivingThing {
         this.genre = genre;
     }
 
+    public int getPv() {
+        return pv;
+    }
+
+    public void setPv(int pv) {
+        this.pv = pv;
+    }
+
+    public int getTour() {
+        return tour;
+    }
+
+    public void setTour(int tour) {
+        this.tour = tour;
+    }
+
     @Override
     public String toString() {
         String strRegimeAlimentaire;
@@ -54,9 +72,7 @@ public abstract class Poisson implements LivingThing {
                 "nom='" + nom + '\'' +
                 ", genre=" + genre + '\'' +
                 ", alimentaire=" + strRegimeAlimentaire +
+                ", PV=" + pv +
                 '}';
     }
-
-
-
 }

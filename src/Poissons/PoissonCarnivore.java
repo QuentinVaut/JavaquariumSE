@@ -12,6 +12,10 @@ public abstract class PoissonCarnivore extends Poisson implements Carnivore {
     }
 
     public void mange(Poisson poisson) {
-        poisson.die();
+        System.out.println("Poisson :" + this.getNom() + " mange : " + poisson.getNom());
+        poisson.setPv(poisson.getPv() - 4);
+        if(poisson.getPv() <= 0) {
+            poisson.die();
+        }
     }
 }
