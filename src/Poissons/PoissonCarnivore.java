@@ -17,5 +17,6 @@ public abstract class PoissonCarnivore extends Poisson implements Carnivore {
         if(poisson.getPv() <= 0) {
             poisson.die();
         }
+        this.setPv(this.getPv() + 5);
     }
 }

@@ -83,12 +83,10 @@ public class Aquarium {
                 Optional<Poisson> otherFish = pickOtherRandomFish(poisson);
                 otherFish = otherFish.filter(Poisson::isAlive);
                 otherFish.ifPresent(((Carnivore) poisson)::mange);
-                poisson.setPv(poisson.getPv() +5);
             } else if (poisson instanceof Herbivore) {
                 Optional<Algue> algue = pickRandomAlgue();
                 algue = algue.filter(Algue::isAlive);
                 algue.ifPresent(((Herbivore) poisson)::mange);
-                poisson.setPv(poisson.getPv() + 3);
             }
         }
     }

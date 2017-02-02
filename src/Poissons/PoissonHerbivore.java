@@ -17,5 +17,6 @@ public abstract class PoissonHerbivore extends Poisson implements Herbivore {
         if(algue.getPv() <= 0) {
             algue.die();
         }
+        this.setPv(this.getPv() + 3);
     }
 }
