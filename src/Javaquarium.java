@@ -15,7 +15,7 @@ public class Javaquarium {
 
 
         int countTour = 1;
-        for(int i = 0; i <= 10;i++) {
+        for(int i = 0; i <= 25;i++) {
             System.out.println("TOUR : " + countTour);
             aquarium.newTour();
             System.out.println("NB poissons : " + aquarium.getPoissons().size());
