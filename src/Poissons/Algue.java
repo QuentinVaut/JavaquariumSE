@@ -9,6 +9,10 @@ public class Algue implements LivingThing {
     private int pv = 10;
     private int tour = 0;
 
+    public Algue(int pv) {
+        this.pv = pv;
+    }
+
     public int getPv() {
         return pv;
     }
